@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"target": "ES6",
+		"module": "CommonJS",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"outDir": "./build",
+		"rootDir": "./",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"declaration": true,
+		"jsx": "react",
+		"allowJs": true, // ✅ Allow .js files
+		"checkJs": false // ✅ Don't type-check .js files
+	},
+	"exclude": ["node_modules"],
+	"include": [
+		"src/**/*",
+		"startup/**/*",
+		"index.ts",
+		"utils/**/*",
+		"middleware/**/*",
+		"services/**/*",
+		"resources/**/*",
+		"scripts/**/*",
+		"public/**/*" // ✅ Include public folder
+	]
+}

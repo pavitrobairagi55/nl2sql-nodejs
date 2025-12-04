@@ -1,0 +1,52 @@
+{
+	"env": {
+		"browser": true,
+		"commonjs": true,
+		"es2020": true,
+		"node": true,
+		"jest/globals": true
+	},
+	"parserOptions": {
+		"ecmaVersion": "latest"
+	},
+	"ignorePatterns": ["build/", "dist/"],
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint", "jest"],
+	"extends": ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
+	"rules": {
+		"@typescript-eslint/no-explicit-any": "warn",
+		"@typescript-eslint/no-unused-vars": "error",
+		"no-console": "warn",
+		"no-undef": "warn",
+		"semi-spacing": "error",
+		"eqeqeq": "warn",
+		"no-invalid-this": "error",
+		"no-return-assign": "error",
+		"no-unused-expressions": ["error", { "allowTernary": true }],
+		"no-useless-concat": "error",
+		"no-useless-return": "error",
+		"no-constant-condition": "warn",
+		"no-unused-vars": ["warn", { "argsIgnorePattern": "req|res|next|__" }],
+		"no-mixed-spaces-and-tabs": "off",
+		"space-before-blocks": "error",
+		"space-in-parens": "error",
+		"space-infix-ops": "error",
+		"space-unary-ops": "error",
+		"max-lines-per-function": ["error", { "max": 310 }],
+		"max-len": [
+			"error",
+			{ "code": 150, "comments": 500, "ignoreUrls": true, "ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreRegExpLiterals": true }
+		],
+		"max-lines": ["error", { "max": 1500, "skipBlankLines": true, "skipComments": true }],
+		"keyword-spacing": "error",
+		"no-mixed-operators": "error",
+		"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }],
+		"no-whitespace-before-property": "error",
+		"nonblock-statement-body-position": "error",
+		"arrow-spacing": "error",
+		"no-confusing-arrow": "error",
+		"no-duplicate-imports": "error",
+		"no-var": "error"
+	}
+}

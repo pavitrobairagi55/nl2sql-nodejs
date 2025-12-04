@@ -1,0 +1,38 @@
+{
+	"name": "nl2sql-nodejs",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"dev": "ts-node src/index.ts",
+		"start:llama3.2-postgres": "CONFIG=llama3.2-postgres npm run dev",
+		"start:llama3.2-mysql": "CONFIG=llama3.2-mysql npm run dev",
+		"start:gpt4-postgres": "CONFIG=gpt4-postgres npm run dev",
+		"start:gpt4-mysql": "CONFIG=gpt4-mysql npm run dev"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pavitrobairagi55/nl2sql-nodejs.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/pavitrobairagi55/nl2sql-nodejs/issues"
+	},
+	"homepage": "https://github.com/pavitrobairagi55/nl2sql-nodejs#readme",
+	"description": "",
+	"devDependencies": {
+		"@types/express": "^5.0.6",
+		"@types/node": "^24.10.1",
+		"@types/pg": "^8.15.6",
+		"ts-node-dev": "^2.0.0",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"express": "^5.2.1",
+		"pg": "^8.16.3"
+	},
+	"type": "module"
+}

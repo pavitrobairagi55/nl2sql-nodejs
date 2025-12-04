@@ -1,0 +1,44 @@
+
+---
+
+# 📝 **.gitignore**
+
+```gitignore
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor directories
+.vscode/
+.idea/
+
+# Optional: coverage from testing tools
+coverage/
+
+# Optional: Docker
+docker-data/
+
+# Optional: local database data
+data/
