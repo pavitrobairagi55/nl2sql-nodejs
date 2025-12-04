@@ -1,3 +1,9 @@
+import { ExtractedSchema } from './IPGDBProvider'
+
 export interface IAIProvider {
-  generateSQL(naturalLanguageQuery: string, schema: string): Promise<string>;
+	generateDBQuery(naturalLanguageQuery: string, schema: ExtractedSchema): Promise<string>
+}
+
+export interface OllamaResponse {
+	response: string
 }

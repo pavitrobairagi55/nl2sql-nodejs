@@ -1,4 +1,8 @@
+import { config as dotenvConfig } from 'dotenv'
 import { PoolConfig } from 'pg'
+
+// Load environment variables from .env file
+dotenvConfig()
 
 export interface AppConfig {
 	ai: {
@@ -25,20 +29,17 @@ export const configs: Record<string, AppConfig> = {
 		database: {
 			provider: 'postgres',
 			config: {
-				host: process.env.DB_HOST || 'localhost',
-				port: parseInt(process.env.DB_PORT || '5432'),
-				database: process.env.DB_NAME || 'mydb',
-				user: process.env.DB_USER || 'postgres',
-				password: process.env.DB_PASSWORD || 'password',
+				host: process.env.PG_DB_HOST || 'localhost',
+				port: parseInt(process.env.PG_DB_PORT || '5432'),
+				database: process.env.PG_DB_NAME || 'mydb',
+				user: process.env.PG_DB_USER || 'postgres',
+				password: process.env.PG_DB_PASSWORD || 'password',
 			},
 		},
 		server: {
 			port: parseInt(process.env.PORT || '3000'),
 		},
 	},
-	// Add more configurations here
-	// 'llama3.2-mysql': { ... },
-	// 'gpt4-postgres': { ... },
 }
 
 export function getConfig(configName: string): AppConfig {

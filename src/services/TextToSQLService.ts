@@ -7,7 +7,7 @@ export class TextToSQLService {
 
 	async processQuery(naturalLanguageQuery: string): Promise<{
 		query: string
-		generatedSQL: string
+		dbQuery: string
 		result: QueryResult
 		executionTime: number
 	}> {
@@ -17,17 +17,35 @@ export class TextToSQLService {
 			// Get database schema
 			const schema = await this.dbProvider.getSchema()
 
-			// Generate SQL using AI
-			const generatedSQL = await this.aiProvider.generateSQL(naturalLanguageQuery, schema)
+			// 🔍 DEBUG: Log the actual schema
+			console.log('=== SCHEMA DEBUG ===')
+			console.log('Available tables:', Object.keys(schema.tables))
+			if (schema.tables['orders']) {
+				console.log(
+					'Orders table columns:',
+					schema.tables['orders'].map((c) => c.name)
+				)
+			}
+			console.log('===================')
 
-			// Execute the generated SQL
-			const result = await this.dbProvider.executeQuery(generatedSQL)
+			// Generate dbQuery using AI
+			const dbQuery = await this.aiProvider.generateDBQuery(naturalLanguageQuery, schema)
+			console.log('generated query......', dbQuery)
+
+			// Validate generated query
+			const validatedQuery = await this.dbProvider.validateQuery(dbQuery, schema)
+			if (!validatedQuery) {
+				throw new Error('Generated SQL is invalid. Please rephrase your query.')
+			}
+
+			// Execute the generated dbQuery
+			const result = await this.dbProvider.executeQuery(validatedQuery)
 
 			const executionTime = Date.now() - startTime
 
 			return {
 				query: naturalLanguageQuery,
-				generatedSQL,
+				dbQuery,
 				result,
 				executionTime,
 			}
