@@ -525,11 +525,17 @@ Examples:
 
 					const data = await response.json()
 					const clientTime = Date.now() - startTime
-					console.log(data)
+
+					console.log('API Response:', data)
+
 					if (data.success) {
-						const rows = data.data.result && data.data.result.rows ? Object.keys(data.data.result.rows[0]) : []
-						const columns =
-							data.data.result && data.data.result.rows && data.data.result.rows.length ? Object.keys(data.data.result.rows[0]) : []
+						// Fix: Get rows directly from the result
+						const rows = data.data.result?.rows || []
+						const rowCount = data.data.result?.rowCount || rows.length || 0
+
+						console.log('Rows:', rows)
+						console.log('Row count:', rowCount)
+
 						resultDiv.innerHTML = `
                         <div class="alert alert-success">
                             <span class="alert-icon">✅</span>
@@ -541,16 +547,16 @@ Examples:
                         </div>
                         
                         <h3>Generated SQL:</h3>
-                        <div class="sql-block"><code>${escapeHtml(data.sql)}</code></div>
+                        <div class="sql-block"><code>${escapeHtml(data.sql || data.data.dbQuery)}</code></div>
                         
                         <div class="results-header">
                             <h3>Query Results</h3>
-                            <span class="row-count">${data.rowCount} rows</span>
+                            <span class="row-count">${rowCount} rows</span>
                         </div>
                         ${
-							data.rowCount === 0
+							rowCount === 0
 								? '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No results found</p></div>'
-								: createTable(rows, columns)
+								: createTable(rows)
 						}
                     `
 
@@ -675,18 +681,26 @@ Examples:
 				}
 			}
 
-			function createTable(rows, columns) {
-				console.log(rows)
-				console.log(columns)
-				if (rows.length === 0) return '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No results found</p></div>'
+			function createTable(rows) {
+				console.log('Creating table with rows:', rows)
+
+				if (!rows || rows.length === 0) {
+					return '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No results found</p></div>'
+				}
+
+				// Get column names from the first row
+				const columns = Object.keys(rows[0])
+				console.log('Columns:', columns)
 
 				let html = '<div class="table-wrapper"><table><thead><tr>'
 
+				// Create header row
 				columns.forEach((col) => {
 					html += `<th>${escapeHtml(col)}</th>`
 				})
 				html += '</tr></thead><tbody>'
 
+				// Create data rows (limit to 100)
 				rows.slice(0, 100).forEach((row) => {
 					html += '<tr>'
 					columns.forEach((col) => {
@@ -695,6 +709,7 @@ Examples:
 						if (value === null || value === undefined) {
 							html += '<td><span class="null-value">NULL</span></td>'
 						} else {
+							// Handle objects and arrays
 							if (typeof value === 'object') {
 								value = JSON.stringify(value)
 							}

@@ -9,6 +9,8 @@ import { IAIProvider } from './interfaces/IAIProvider'
 import { IDatabaseProvider } from './interfaces/IDatabaseProvider'
 import path from 'path'
 import cors from 'cors'
+import { OpenAIProvider } from './providers/ai/OpenAIProvider'
+import { MySQLProvider } from './providers/database/MySQLProvider'
 
 export class App {
 	private app: Application
@@ -31,6 +33,8 @@ export class App {
 		switch (this.config.ai.provider) {
 			case 'ollama':
 				return new OllamaProvider(this.config.ai.model, this.config.ai.baseUrl)
+			case 'openai':
+				return new OpenAIProvider(this.config.ai.model, this.config.ai.apiKey)
 			default:
 				throw new Error(`Unsupported AI provider: ${this.config.ai.provider}`)
 		}
@@ -40,6 +44,8 @@ export class App {
 		switch (this.config.database.provider) {
 			case 'postgres':
 				return new PostgresProvider(this.config.database.config)
+			case 'mysql':
+				return new MySQLProvider(this.config.database.config)
 			default:
 				throw new Error(`Unsupported database provider: ${this.config.database.provider}`)
 		}

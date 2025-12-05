@@ -10,13 +10,13 @@ export class OllamaProvider implements IAIProvider {
 		this.baseUrl = baseUrl
 	}
 
-	async generateDBQuery(naturalQuery: string, schema: PGDBSchema): Promise<string> {
+	async generateDBQuery(naturalLanguageQuery: string, schema: PGDBSchema): Promise<string> {
 		const schemaText = this.formatSchemaDetailed(schema)
 
 		const prompt = `DATABASE SCHEMA:
 ${schemaText}
 
-TASK: Convert this question to PostgreSQL SQL: "${naturalQuery}"
+TASK: Convert this question to PostgreSQL SQL: "${naturalLanguageQuery}"
 
 RESPOND WITH ONLY THE SQL QUERY. NO TEXT BEFORE OR AFTER.
 EXAMPLE RESPONSE: SELECT * FROM "orders" WHERE "price" > 100 LIMIT 10;

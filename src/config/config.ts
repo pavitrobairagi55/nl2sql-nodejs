@@ -9,6 +9,7 @@ export interface AppConfig {
 		provider: 'ollama' | 'openai'
 		model: string
 		baseUrl?: string
+		apiKey?: string
 	}
 	database: {
 		provider: 'postgres' | 'mysql' | 'mongodb'
@@ -34,6 +35,29 @@ export const configs: Record<string, AppConfig> = {
 				database: process.env.PG_DB_NAME || 'mydb',
 				user: process.env.PG_DB_USER || 'postgres',
 				password: process.env.PG_DB_PASSWORD || 'password',
+			},
+		},
+		server: {
+			port: parseInt(process.env.PORT || '3000'),
+		},
+	},
+	'gpt4-mysql': {
+		ai: {
+			provider: 'openai',
+			model: 'gpt-4o-mini',
+			apiKey: process.env.OPENAI_API_KEY,
+		},
+		database: {
+			provider: 'mysql',
+			config: {
+				host: process.env.MYSQL_DB_HOST || 'localhost',
+				port: parseInt(process.env.MYSQL_DB_PORT || '3306'),
+				database: process.env.MYSQL_DB_NAME || 'mydb',
+				user: process.env.MYSQL_DB_USER || 'root',
+				password: process.env.MYSQL_DB_PASSWORD || 'password',
+				waitForConnections: true,
+				connectionLimit: 10,
+				queueLimit: 0,
 			},
 		},
 		server: {

@@ -17,17 +17,6 @@ export class TextToSQLService {
 			// Get database schema
 			const schema = await this.dbProvider.getSchema()
 
-			// 🔍 DEBUG: Log the actual schema
-			console.log('=== SCHEMA DEBUG ===')
-			console.log('Available tables:', Object.keys(schema.tables))
-			if (schema.tables['orders']) {
-				console.log(
-					'Orders table columns:',
-					schema.tables['orders'].map((c) => c.name)
-				)
-			}
-			console.log('===================')
-
 			// Generate dbQuery using AI
 			const dbQuery = await this.aiProvider.generateDBQuery(naturalLanguageQuery, schema)
 			console.log('generated query......', dbQuery)
@@ -35,7 +24,7 @@ export class TextToSQLService {
 			// Validate generated query
 			const validatedQuery = await this.dbProvider.validateQuery(dbQuery, schema)
 			if (!validatedQuery) {
-				throw new Error('Generated SQL is invalid. Please rephrase your query.')
+				throw new Error('Generated DB Query is invalid. Please rephrase your query.')
 			}
 
 			// Execute the generated dbQuery

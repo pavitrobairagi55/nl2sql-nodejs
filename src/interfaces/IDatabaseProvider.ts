@@ -10,6 +10,6 @@ export interface IDatabaseProvider {
 	connect(): Promise<void>
 	disconnect(): Promise<void>
 	executeQuery(query: string): Promise<QueryResult>
-	validateQuery(query: string, schema: PGDBSchema): Promise<string | false>
-	getSchema(): Promise<ExtractedSchema>
+	validateQuery(query: string, schema: PGDBSchema | string): Promise<string | false>
+	getSchema(): Promise<ExtractedSchema | string>
 }
